@@ -1,5 +1,6 @@
 #include<iostream>
 #include<math.h>
+#include<vector>
 #include<stdlib.h>
 #define stacksize 100
 using namespace std;
@@ -53,7 +54,7 @@ int pop()
     }
 }
 /**********************************/
-char stacktop()
+int stacktop()
 {
     return s.item[s.top];
 }
@@ -236,22 +237,23 @@ int main()
     // cin>>prefix;
     // prefixEvaluation(prefix);
     char Infix[30];
-    vector<char>postfix;
+    vector<char> postfix;
+    cout<<"Enter an infix expression: ";
     cin>>Infix;
     int i=0;
     initialize();
-    while(postfix[i]!='/0')
+    while(Infix[i]!='\0')
     {
-        char symb=postfix[i];
-        if(symb<='a'&&symb>='z')
+        char symb=Infix[i];
+        if(symb>='a'&&symb<='z')
         {
             postfix.push_back(symb);
         }
         else
         {
-            while(!isEmpty&&prcd(stacktop(),symb))
+            while(!isEmpty() && prcd(stacktop(),symb))
             {
-                char x=pop();
+                char x= (char)pop();
                 postfix.push_back(x);
             }
             push(symb);
@@ -260,7 +262,7 @@ int main()
     }
     while(!isEmpty())
     {
-        char x=pop();
+        char x= (char)pop();
         postfix.push_back(x);
     }
     for(int i=0;i<postfix.size();i++)

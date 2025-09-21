@@ -1,6 +1,7 @@
 #include<iostream>
 #include<math.h>
 #include<vector>
+#include<string.h>
 #include<stdlib.h>
 #define stacksize 100
 using namespace std;
@@ -38,9 +39,9 @@ void push(int x)
     }
 }
 /**********************************/
-int pop()
+char pop()
 {
-    int x;
+    char x;
     if(isEmpty())
     {
         cout<<"Stack Underflow"<<endl;
@@ -57,76 +58,6 @@ int pop()
 int stacktop()
 {
     return s.item[s.top];
-}
-/**********************************/
-void decimalToBinary(int n)
-{
-    initialize();
-    while(n!=0)
-    {
-        
-        int r=n%2;
-        push(r);
-        n=n/2;
-    }
-    while(!isEmpty())
-    {
-        int x=pop();
-        cout<<x;
-    }
-}
-/**********************************/
-void decimalToOctal(int n)
-{
-    initialize();
-    while(n!=0)
-    {
-        
-        int r=n%8;
-        push(r);
-        n=n/8;
-    }
-    while(!isEmpty())
-    {
-        int x=pop();
-        cout<<x;
-    }
-}
-/*********************************/
-void decimalToHexadecimal(int n)
-{
-    initialize();
-    char DAT[16]={'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
-    while(n!=0)
-    {
-        
-        int r=n%16;
-        push(r);
-        n=n/16;
-    }
-    while(!isEmpty())
-    {
-        int x=pop();
-        cout<<DAT[x];
-    }
-}
-/*********************************/
-void decimalToAnyBase(int n,int b)
-{
-    initialize();
-    char DAT[16]={'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
-    while(n!=0)
-    {
-        
-        int r=n%b;
-        push(r);
-        n=n/b;
-    }
-    while(!isEmpty())
-    {
-        int x=pop();
-        cout<<DAT[x];
-    }
 }
 /*********************************/
 int evaluate(int x,int y,char symbol)
@@ -193,29 +124,60 @@ void prefixEvaluation(char prefix[])
     cout<<"answer= "<< pop();
 }
 /**********************************/
+bool prcd(char op1, char op2)
+{
+    if(op1=='^'||op1=='*'||op1=='/'||op1=='%')
+    {
+        if(op2=='^')
+            return false;
+        else
+            return true;
+    }
+    else if(op1=='+'||op1=='-')
+    {
+        if(op2=='+'||op2=='-')
+            return true;
+        else
+            return false;
+    }
+}
+/**********************************/
 int main()
 {
-    // /*initialize();
-    // push(10);
-    // push(20);
-    // push(30);
-    // cout<<pop()<<endl;
-    // cout<<stacktop()<<endl;*/
-    // int n;
-    // cout<<"Enter a decimal number: ";
-    // cin>>n;
-    // decimalToBinary(n);
-    // decimalToOctal(n);
-    // decimalToHexadecimal(n);
-    // decimalToAnyBase(n,2);
-    // decimalToAnyBase(n,8);
-    // decimalToAnyBase(n,16);
-    // char postfix[100];
-    // cout<<"Enter a postfix expression: ";
-    // cin>>postfix;
-    // postfixEvaluation(postfix);
-    // char prefix[100];
-    // cout<<"Enter a prefix expression: ";
-    // cin>>prefix;
-    // prefixEvaluation(prefix);
+    char Infix[30];
+    vector<char> prefix;
+    cout<<"Enter an infix expression: ";
+    cin>>Infix;
+    initialize();
+    int i=0;
+    while(Infix[i]!='\0')
+        i++;
+    
+    i=i-1;
+    while(i>=0)
+    {
+        char symb=Infix[i];
+        if(symb>='a'&&symb<='z' || symb>='A'&&symb<='Z' || symb>='0'&&symb<='9')
+        {
+            prefix.push_back(symb);
+        }
+        else
+        {
+            while(!isEmpty() && !prcd(symb,stacktop()))
+            {
+                char x= pop();
+                prefix.push_back(x);
+            }
+            push(symb);
+        }
+        i--;
+    }
+    while(!isEmpty())
+    {
+        char x= pop();
+        prefix.push_back(x);
+    }
+    for(int i=prefix.size()-1;i>=0;i--)
+        cout<<prefix[i];
+    return 0;
 }

@@ -73,29 +73,6 @@ int evaluate(int x,int y,char symbol)
     return 0;
 }
 /**********************************/
-void postfixEvaluation(char postfix[])
-{
-    int i=0;
-    initialize();
-    while(postfix[i]!='\0')
-    {
-        char symbol=postfix[i];
-        if(symbol>='0' && symbol<='9')
-        {
-            push(symbol-'0');
-        }
-        else
-        {
-            int y=pop();
-            int x=pop();
-            int value = evaluate(x,y,symbol);
-            push(value);
-        }
-        i++;
-    }
-    cout<<"answer= "<< pop();
-}
-/**********************************/
 void prefixEvaluation(char prefix[])
 {
     int i=0;

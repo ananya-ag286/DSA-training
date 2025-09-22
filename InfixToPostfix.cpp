@@ -95,34 +95,6 @@ void postfixEvaluation(char postfix[])
     cout<<"answer= "<< pop();
 }
 /**********************************/
-void prefixEvaluation(char prefix[])
-{
-    int i=0;
-    initialize();
-    while(prefix[i]!='\0')
-    {
-        i++;
-    }
-    i--;
-    while(i>=0)
-    {
-        char symbol=prefix[i];
-        if(symbol>='0' && symbol<='9')
-        {
-            push(symbol-'0');
-        }
-        else
-        {
-            int x=pop();
-            int y=pop();
-            int value = evaluate(x,y,symbol);
-            push(value);
-        }
-        i--;
-    }
-    cout<<"answer= "<< pop();
-}
-/**********************************/
 bool prcd(char op1, char op2)
 {
     if(op1=='^'||op1=='*'||op1=='/'||op1=='%')

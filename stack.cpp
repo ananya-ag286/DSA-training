@@ -6,7 +6,7 @@
 using namespace std;
 struct stk
 {
-    int item[100];
+    int item[stacksize];
     int top;
 };
 struct stk s;
@@ -218,4 +218,5 @@ int main()
     // cout<<"Enter a prefix expression: ";
     // cin>>prefix;
     // prefixEvaluation(prefix);
+    
 }

@@ -42,7 +42,7 @@ void traverse()
         cout<<p->info;
         p=p->next;
     }
-    cout<<c;
+    cout<<"\ncount = "<<c;
 }
 int main()
 {
